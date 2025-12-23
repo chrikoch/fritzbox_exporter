@@ -1,0 +1,4 @@
+FROM busybox
+COPY fritzbox_exporter /app/fritzbox_exporter
+EXPOSE 9133
+ENTRYPOINT ["/app/fritzbox_exporter"]
