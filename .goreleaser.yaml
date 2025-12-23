@@ -1,5 +1,6 @@
 # .goreleaser.yaml
 # Documentation at https://goreleaser.com
+version: 2
 before:
   hooks:
     - go mod tidy
@@ -40,7 +41,7 @@ archives:
       - goos: windows
         format: zip
 
-checksum:
+checksums:
   name_template: 'checksums.txt'
 
 snapshot:
