@@ -56,38 +56,18 @@ changelog:
       - '^docs:'
       - '^test:'
 
-dockers:
-  - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-amd64"
-    use: buildx
-    goos: linux
-    goarch: amd64
+dockers_v2:
+  - images:
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter"
+    tags:
+      - "{{ .Version }}"
+      - "latest"
     dockerfile: Dockerfile.release
-  - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-arm64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-arm64"
-    use: buildx
     goos: linux
-    goarch: arm64
-    dockerfile: Dockerfile.release
-  - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-armv7"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-armv7"
-    use: buildx
-    goos: linux
-    goarch: arm
-    goarm: 7
-    dockerfile: Dockerfile.release
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    goarm:
+      - 7
 
-docker_manifests:
-  - name_template: "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}"
-    image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-arm64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-armv7"
-  - name_template: "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest"
-    image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-arm64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-armv7"
