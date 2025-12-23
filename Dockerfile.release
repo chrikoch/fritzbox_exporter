@@ -1,4 +1,5 @@
 FROM busybox
-COPY fritzbox_exporter /app/fritzbox_exporter
+ARG TARGETPLATFORM
+COPY $TARGETPLATFORM/fritzbox_exporter /app/fritzbox_exporter
 EXPOSE 9133
 ENTRYPOINT ["/app/fritzbox_exporter"]

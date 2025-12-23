@@ -1,12 +1,14 @@
 # .goreleaser.yaml
 # Documentation at https://goreleaser.com
+version: 2
 before:
   hooks:
     - go mod tidy
     - go mod download
 
 builds:
-  - env:
+  - id: fritzbox_exporter_binary
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
@@ -26,7 +28,8 @@ builds:
         goarch: arm
 
 archives:
-  - format: tar.gz
+  - formats:
+      - tar.gz
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
       {{ .ProjectName }}_
@@ -38,13 +41,14 @@ archives:
     # use zip for windows archives
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
 
 checksum:
   name_template: 'checksums.txt'
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"
 
 changelog:
   sort: asc
@@ -53,44 +57,17 @@ changelog:
       - '^docs:'
       - '^test:'
 
-dockers:
-  - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-amd64"
-    use: buildx
-    goos: linux
-    goarch: amd64
+dockers_v2:
+  - images:
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter"
+    tags:
+      - "v{{ .Version }}"
+      - "latest"
     dockerfile: Dockerfile.release
-    build_flag_sets:
-      - builder
-  - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-arm64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-arm64"
-    use: buildx
-    goos: linux
-    goarch: arm64
-    dockerfile: Dockerfile.release
-    build_flag_sets:
-      - builder
-  - image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-armv7"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-armv7"
-    use: buildx
-    goos: linux
-    goarch: arm
-    goarm: 7
-    dockerfile: Dockerfile.release
-    build_flag_sets:
-      - builder
-
-docker_manifests:
-  - name_template: "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}"
-    image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-arm64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:{{ .Version }}-armv7"
-  - name_template: "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest"
-    image_templates:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-arm64"
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/fritzbox_exporter:latest-armv7"
+    ids:
+      - fritzbox_exporter_binary
+    platforms:
+      - linux/amd64
+      - linux/arm64
+      - linux/arm/v7
+      - linux/arm/v6
