@@ -1,4 +1,4 @@
-module github.com/ndecker/fritzbox_exporter
+module github.com/chrikoch/fritzbox_exporter
 
 go 1.23.0
 

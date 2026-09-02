@@ -3,7 +3,7 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	upnp "github.com/ndecker/fritzbox_exporter/fritzbox_upnp"
+	upnp "github.com/chrikoch/fritzbox_exporter/fritzbox_upnp"
 	"github.com/prometheus/client_golang/prometheus"
 	"gopkg.in/yaml.v3"
 	"io"

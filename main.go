@@ -22,7 +22,7 @@ import (
 	"os"
 	"strconv"
 
-	upnp "github.com/ndecker/fritzbox_exporter/fritzbox_upnp"
+	upnp "github.com/chrikoch/fritzbox_exporter/fritzbox_upnp"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )

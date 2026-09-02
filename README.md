@@ -19,18 +19,18 @@ This exporter is known to work with the following models:
 
 ### Go install
 
-    go install github.com/ndecker/fritzbox_exporter@latest
+    go install github.com/chrikoch/fritzbox_exporter@latest
 
 ### Go build
 
-    git clone https://github.com/ndecker/fritzbox_exporter/
+    git clone https://github.com/chrikoch/fritzbox_exporter/
     cd fritzbox_exporter
     go build
     go install
 
 ### Docker
 
-    git clone https://github.com/ndecker/fritzbox_exporter/
+    git clone https://github.com/chrikoch/fritzbox_exporter/
     docker build -t fritzbox_exporter fritzbox_exporter
 
 ##  Prerequisites
