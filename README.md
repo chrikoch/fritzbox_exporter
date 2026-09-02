@@ -30,6 +30,27 @@ This exporter is known to work with the following models:
 
 ### Docker
 
+#### Use a published image
+
+Images for each release are published to the GitHub Container Registry. To run
+the latest release:
+
+    docker run --rm -p 9133:9133 ghcr.io/chrikoch/fritzbox_exporter:latest
+
+You can also use a specific release, for example:
+
+    docker run --rm -p 9133:9133 ghcr.io/chrikoch/fritzbox_exporter:v1.2.3
+
+Configuration options can be passed as environment variables. For example:
+
+    docker run --rm -p 9133:9133 \
+      -e FRITZBOX_DEVICE=192.168.178.1 \
+      -e FRITZBOX_USERNAME=admin \
+      -e FRITZBOX_PASSWORD=secret \
+      ghcr.io/chrikoch/fritzbox_exporter:latest
+
+#### Build the image locally
+
     git clone https://github.com/chrikoch/fritzbox_exporter/
     docker build -t fritzbox_exporter fritzbox_exporter
 
